@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=800');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        nav {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            position: relative;
+            margin-right: 20px;
+        }
+        nav ul li:last-child {
+            margin-right: 0;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        nav ul li a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+        nav ul li .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        nav ul li .dropdown a {
+            display: block;
+            padding: 10px;
+            white-space: nowrap;
+        }
+        nav ul li:hover .dropdown {
+            display: block;
+        }
+
+        #login-form {
+            display: none;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #login-form input[type="email"],
+        #login-form input[type="password"],
+        #login-form button {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        #login-form button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="#">Login</a>
+                <div class="dropdown">
+                    <a href="#" onclick="showLoginForm('admin')">Admin Login</a>
+                    <a href="#" onclick="showLoginForm('parent')">Parent Login</a>
+                    <a href="#" onclick="showLoginForm('staff')">Staff Login</a>
+                    <a href="#" onclick="showLoginForm('student')">Student Login</a>
+                </div>
+            </li>
+            <li>
+                <a href="#">Register</a>
+                <div class="dropdown">
+                    <a href="parentregister" onclick="showLoginForm('parent')">Parent Register</a>
+                    <a href="staffregister" onclick="showLoginForm('staff')">Staff Register</a>
+                    <a href="studentregister" onclick="showLoginForm('student')">Student Register</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <form id="login-form" action="doLogin/" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <input required type="email" name='email' class="form-control" placeholder="Email">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                </div>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <input required type="password" name='password' class="form-control" placeholder="Password">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="g-recaptcha" data-sitekey="6LfswtgZAAAAAJ7bhwqZZtDpBsc75ekH6FWA4Fnt"></div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            </div>
+        </div>
+    </form>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+           <h1><li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li></h1>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+    <script>
+        function showLoginForm(type) {
+            var form = document.getElementById('login-form');
+            if (form.style.display === 'block' && form.getAttribute('data-type') === type) {
+                form.style.display = 'none';
+            } else {
+                form.style.display = 'block';
+                form.setAttribute('data-type', type);
+            }
+        }
+    </script>
+</body>
+</html>

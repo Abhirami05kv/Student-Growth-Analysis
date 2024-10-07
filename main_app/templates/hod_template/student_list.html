@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-align: center;
+            color: #343a40;
+        }
+        .list-group-item {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Report List</h1>
+        <ul class="list-group">
+            {% for student in students %}
+                <li class="list-group-item">
+                    <a href="{% url 'view_report_admin' student.id %}">{{ student }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+      <br>
+              <h4>Please click on the names to view their corresponding result report</h4>
+
+    </div>
+</body>
+</html>

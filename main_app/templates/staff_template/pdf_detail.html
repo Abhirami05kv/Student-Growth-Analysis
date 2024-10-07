@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ document.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            text-align: center;
+            color: #666;
+        }
+        .pdf-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .back-link {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            text-align: center;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+        .back-link:hover {
+            background-color: #0056b3;
+        }
+        .back-link:active {
+            background-color: #004494;
+        }
+        object {
+            display: block;
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-container">
+        <h1>{{ document.title }}</h1>
+        <p>Uploaded at: {{ document.uploaded_at }}</p>
+       {% if document %}
+    {% if document.upload %}
+        <object data="{{ document.upload.url }}" type="application/pdf">
+            <!-- Fallback content if the browser does not support the object tag -->
+            Your browser does not support PDFs. <a href="{{ document.upload.url }}">Download the PDF</a>
+        </object>
+    {% else %}
+        <p>No file associated with this document.</p>
+    {% endif %}
+{% else %}
+    <p>No document available.</p>
+{% endif %}
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block page_title %}{{page_title}}{% endblock page_title %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{page_title}}</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="container register-form">
+                              <div class="form">
+                                <div class="note"> 
+                                    <label for="Departement">Departement</label>
+                        <input type="text" id="departemnt" name="departement">
+                        <button type="submit" class="btnSubmit">Submit</button>
+                                </form>
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Gender</th>
+                                    <th>Course</th>
+                                    <th>Avatar</th>
+                        
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for a,b in mylist %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{a}}</td>
+                                    <td>{{b.email}}</td>
+                                    <td>{{b.gender}}</td>
+                                    <td>{{a.course.name}}</td>
+                                    <td>
+                                        {% if staff.profile_pic == ""  %}
+                                        No Image
+                                        {% else %}
+                                        <img class="img img-fluid mb-2" height="100" width="100"
+                                            src="{{b.profile_pic}}" alt="">
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                            
+                                    
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

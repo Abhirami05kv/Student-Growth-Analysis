@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF List</title>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        li a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+        li a:hover {
+            text-decoration: underline;
+        }
+        .upload-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            text-align: center;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+        .upload-btn:hover {
+            background-color: #0056b3;
+        }
+        .upload-btn:active {
+            background-color: #004494;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        {% if request.user.user_type == '2' %}
+        {% for document in documents %}
+
+            <li>
+                <span>
+                    <a href="{% url 'edit_assignment' document.pk %}">{{ document.title }} </a>
+                    <small>(uploaded at {{ document.uploaded_at }})</small>
+
+                </span>
+            </li>
+                {% endfor %}
+
+{% endif %}
+                {% if request.user.user_type == '3' %}
+
+                {% for document in documents %}
+
+         <li>
+                <span>
+                    
+                    <a href="{% url 'edit_assignmentstu' document.pk %}">{{ document.title }} </a>
+                    <small>(uploaded at {{ document.uploaded_at }})</small>
+                    <p> MARK - {{ document.marks }}</p>
+                </span>
+            </li>
+    </ul>
+                {% endfor %}
+{% endif %}
+ {% if request.user.user_type == '5' %}
+
+                {% for document in documents %}
+
+         <li>
+                <span>
+                    <a href="{% url 'pdf_detail_parent' document.pk %}">{{ document.title }} </a>
+
+                    <small>(uploaded at {{ document.uploaded_at }})</small>
+                    <p> MARK - {{ document.marks }}</p>
+                </span>
+            </li>
+    </ul>
+                {% endfor %}
+{% endif %}
+
+
+
+</body>
+</html>

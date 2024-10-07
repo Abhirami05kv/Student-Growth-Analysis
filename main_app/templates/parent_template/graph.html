@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>simple linear regression model</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Attendance, Marks, and Predicted Score is {{predicted_score}}</h2>
+    <canvas id="attendanceChart" width="400" height="200"></canvas>
+    <canvas id="marksChart" width="400" height="200"></canvas>
+
+    <script>
+        // Parse the data passed from Django view
+        const data = JSON.parse('{{ data|escapejs }}');
+
+        // Prepare the attendance data
+        const attendanceLabels = data.attendance.labels;
+        const attendanceStatuses = data.attendance.statuses.map(status => status ? 1 : 0);
+
+        // Prepare the marks data
+        const marksLabels = data.marks.dates;
+        const marksValues = data.marks.marks;
+
+        // Predicted score data
+        const predictedScoreValue = data.predicted_score;
+        const predictedScoreDate = '2024-05-25'; // Hardcoded for simplicity
+
+        // Create the attendance chart
+        const ctxAttendance = document.getElementById('attendanceChart').getContext('2d');
+        new Chart(ctxAttendance, {
+            type: 'line',
+            data: {
+                labels: attendanceLabels,
+                datasets: [{
+                    label: 'Attendance (1 = Present, 0 = Absent)',
+                    data: attendanceStatuses,
+                    borderColor: 'blue',
+                    fill: false,
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 1
+                    }
+                }
+            }
+        });
+
+// Create the marks chart
+const ctxMarks = document.getElementById('marksChart').getContext('2d');
+new Chart(ctxMarks, {
+    type: 'line',
+    data: {
+        labels: marksLabels,
+        datasets: [{
+            label: 'Marks',
+            data: marksValues,
+            borderColor: 'green',
+            fill: false,
+        },
+        {
+            label: 'Predicted Score',
+            data: [{ x: predictedScoreDate, y: predictedScoreValue }],
+            borderColor: 'red',
+            backgroundColor: 'red',
+            pointRadius: 10, // Increase the point size for better visibility
+            pointStyle: 'star', // Use star as the point style
+            showLine: false,
+        }]
+    },
+    options: {
+        scales: {
+            x: {
+                type: 'time',
+                time: {
+                    unit: 'day'
+                }
+            },
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+    </script>
+</body>
+</html>

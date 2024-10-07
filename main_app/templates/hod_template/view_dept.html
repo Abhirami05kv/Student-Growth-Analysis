@@ -1,0 +1,44 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block page_title %}{{page_title}}{% endblock page_title %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{page_title}}</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>View Teachers</th>
+                                     <th>View Students</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in context %}
+                                <tr>
+                                    <td>{{i.name}}</td>
+                                   <td> <a href="/view_dept_teachers/{{ i.id }}">View</a></td>
+                                    <td> <a href="/view_dept_students/{{ i.id }}">View</a></td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
